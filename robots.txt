@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /NesanelRosenberg
+Disallow: /AvigdorSchulman
+Disallow: /AviBensoussan
+Disallow: /MosheWeiss
+Disallow: /JacobSchwartz
+Disallow: /ShaindyKern
+Allow: /$
+Allow: /join

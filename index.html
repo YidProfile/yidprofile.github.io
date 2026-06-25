@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YidProfile.com</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --black: #09090E; --navy: #0D1B2A; --blue: #1565C0;
+  --sky: #42A5F5; --white: #EEF3F8; --gray: #7A8899;
+  --border: rgba(255,255,255,0.07);
+}
+html { scroll-behavior: smooth; }
+body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+body::before {
+  content: ''; position: fixed; inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 5% 0%, rgba(21,101,192,0.13) 0%, transparent 60%);
+  pointer-events: none; z-index: 0;
+}
+
+nav {
+  position: relative; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 60px; border-bottom: 1px solid var(--border);
+}
+.nav-brand { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: var(--white); text-decoration: none; }
+.nav-brand span { color: var(--sky); }
+.nav-live { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--gray); }
+.live-dot { width: 7px; height: 7px; border-radius: 50%; background: #4CAF50; box-shadow: 0 0 6px #4CAF50; animation: pulse 2s infinite; flex-shrink: 0; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+.nav-cta { background: var(--blue); color: white; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; padding: 9px 22px; border-radius: 100px; text-decoration: none; transition: background 0.2s; }
+.nav-cta:hover { background: #1976D2; }
+
+.hero {
+  position: relative; z-index: 1;
+  max-width: 580px; margin: 0 auto;
+  padding: 100px 24px 80px; text-align: center;
+}
+h1 { font-family: 'Syne', sans-serif; font-size: clamp(44px, 8vw, 72px); font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 20px; }
+h1 span { color: var(--sky); }
+.hero-sub { font-size: 16px; color: var(--gray); font-weight: 300; line-height: 1.7; margin-bottom: 40px; }
+.hero-cta { display: inline-flex; align-items: center; gap: 10px; background: var(--blue); color: white; font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; padding: 15px 36px; border-radius: 14px; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+.hero-cta:hover { background: #1976D2; transform: translateY(-1px); }
+
+.gold-rule { height: 1px; margin: 0 60px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.25), transparent); }
+
+.profiles-section {
+  position: relative; z-index: 1;
+  max-width: 860px; margin: 0 auto;
+  padding: 64px 24px; text-align: center;
+}
+.section-eyebrow { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sky); margin-bottom: 12px; }
+.profiles-title { font-family: 'Syne', sans-serif; font-size: clamp(22px, 3vw, 30px); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 6px; }
+.profiles-sub { font-size: 14px; color: var(--gray); font-weight: 300; margin-bottom: 36px; }
+
+.profile-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-bottom: 20px; }
+.profile-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 16px; padding: 20px 18px; text-align: left; text-decoration: none; color: inherit; display: block; transition: border-color 0.2s, transform 0.2s; }
+.profile-card:hover { border-color: rgba(66,165,245,0.25); transform: translateY(-2px); }
+.card-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.card-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--blue), var(--sky)); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 800; color: white; flex-shrink: 0; }
+.card-name { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 2px; }
+.card-role { font-size: 12px; color: var(--gray); font-weight: 300; }
+.card-live { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; color: #4CAF50; font-weight: 500; background: rgba(76,175,80,0.08); border: 1px solid rgba(76,175,80,0.18); border-radius: 100px; padding: 3px 10px; }
+.card-live-dot { width: 5px; height: 5px; border-radius: 50%; background: #4CAF50; animation: pulse 2s infinite; }
+
+.see-more { display: none; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-bottom: 20px; }
+.see-more.open { display: grid; }
+.toggle-btn { background: transparent; border: 1px solid var(--border); color: var(--gray); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 400; padding: 9px 22px; border-radius: 100px; cursor: pointer; transition: border-color 0.2s, color 0.2s; }
+.toggle-btn:hover { border-color: rgba(66,165,245,0.3); color: var(--white); }
+
+.cta-strip { position: relative; z-index: 1; padding: 0 24px 72px; }
+.cta-inner { max-width: 500px; margin: 0 auto; background: var(--navy); border: 1px solid rgba(66,165,245,0.1); border-radius: 20px; padding: 48px 36px; text-align: center; }
+.cta-inner h2 { font-family: 'Syne', sans-serif; font-size: clamp(22px, 3vw, 30px); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 10px; }
+.cta-inner h2 span { color: var(--sky); }
+.cta-inner p { font-size: 14px; color: var(--gray); font-weight: 300; margin-bottom: 28px; }
+.cta-free { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: #3B6D11; font-weight: 500; background: #EAF3DE; border: 1px solid rgba(99,153,34,0.35); border-radius: 100px; padding: 5px 14px; margin-top: 14px; }
+.free-dot { width: 5px; height: 5px; border-radius: 50%; background: #639922; }
+
+footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 18px 60px; display: flex; align-items: center; justify-content: space-between; }
+.footer-brand { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: var(--white); }
+.footer-brand span { color: var(--sky); }
+.footer-right { font-size: 11px; color: #2E4A6A; }
+.footer-right a { color: #3A6A9A; text-decoration: none; }
+
+@media (max-width: 600px) {
+  nav, footer { padding: 18px 20px; }
+  .gold-rule { margin: 0 20px; }
+  .cta-inner { padding: 36px 22px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand">Yid<span>Profile</span>.com</a>
+  <div class="nav-live"><div class="live-dot"></div> Profiles live now</div>
+  <a href="/join" class="nav-cta">Get started →</a>
+</nav>
+
+<div class="hero">
+  <h1>Your resume.<br><span>Live.</span></h1>
+  <p class="hero-sub">Professional profile. Print-ready resume. QR code. Free.</p>
+  <a href="/join" class="hero-cta">Build my profile →</a>
+</div>
+
+<div class="gold-rule"></div>
+
+<div class="profiles-section">
+  <div class="section-eyebrow"><div class="live-dot"></div> Live profiles</div>
+  <h2 class="profiles-title">See it in action</h2>
+  <p class="profiles-sub">Click any profile to see exactly what you get.</p>
+
+  <div class="profile-cards">
+    <a href="/AwesomeYid" class="profile-card">
+      <div class="card-top">
+        <div class="card-avatar">DP</div>
+        <div>
+          <div class="card-name">Dovid Perlman</div>
+          <div class="card-role">CEO · Private Equity</div>
+        </div>
+      </div>
+      <div class="card-live"><div class="card-live-dot"></div> Live profile</div>
+    </a>
+  </div>
+
+  <button class="toggle-btn" id="toggleBtn" onclick="toggleMore()">See more profiles</button>
+</div>
+
+<div class="gold-rule"></div>
+
+<div class="cta-strip">
+  <div class="cta-inner">
+    <h2>Ready to go <span>live?</span></h2>
+    <p>Fill out the form. We build everything. You show up ready.</p>
+    <a href="/join" class="hero-cta">Build my profile →</a>
+    <br>
+    <div class="cta-free"><div class="free-dot"></div> 100% free, always</div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-brand">Yid<span>Profile</span>.com</div>
+  <div class="footer-right"><a href="mailto:hello@yidprofile.com">hello@yidprofile.com</a></div>
+</footer>
+
+<script>
+function toggleMore() {
+  const more = document.getElementById('moreCards');
+  const btn = document.getElementById('toggleBtn');
+  const open = more.classList.toggle('open');
+  btn.textContent = open ? 'See less' : 'See more profiles';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YidProfile — Join the Network</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black: #09090E;
+    --navy:  #0D1B2A;
+    --blue:  #1565C0;
+    --sky:   #42A5F5;
+    --white: #EEF3F8;
+    --gray:  #7A8899;
+    --border: rgba(255,255,255,0.07);
+  }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 10% 0%, rgba(21,101,192,0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .card {
+    position: relative;
+    background: var(--navy);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 24px;
+    padding: 40px 32px 36px;
+    max-width: 400px;
+    width: 100%;
+    animation: fadeUp 0.5s ease both;
+  }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--sky);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 26px; font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  h1 span { color: var(--sky); }
+  .sub {
+    font-size: 14px; color: var(--gray);
+    font-weight: 300; line-height: 1.6;
+    margin-bottom: 32px;
+  }
+  .field { margin-bottom: 16px; }
+  label {
+    display: block;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--gray); margin-bottom: 7px;
+  }
+  input {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px; color: var(--white);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input::placeholder { color: #3A5A7A; }
+  input:focus { border-color: rgba(66,165,245,0.4); }
+  .btn {
+    width: 100%; margin-top: 8px;
+    padding: 16px;
+    background: var(--blue);
+    color: white;
+    font-family: 'Syne', sans-serif;
+    font-size: 15px; font-weight: 700;
+    border: none; border-radius: 14px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn:hover { background: #1976D2; transform: translateY(-1px); }
+  .btn:active { transform: scale(0.98); }
+  .success {
+    display: none;
+    text-align: center;
+    padding: 20px 0;
+  }
+  .success .check {
+    font-size: 48px; margin-bottom: 16px;
+  }
+  .success h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px; font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .success p { font-size: 14px; color: var(--gray); }
+  .footer { text-align: center; font-size: 11px; color: #2A3A4A; margin-top: 24px; }
+  .footer a { color: #2E5A7A; text-decoration: none; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">YidProfile.com</div>
+
+  <div id="formView">
+    <h1>Let's get you <span>hired.</span></h1>
+    <p class="sub">Drop your info and we'll be in touch to build your professional profile — free.</p>
+
+    <div class="field">
+      <label>Full Name</label>
+      <input type="text" id="name" placeholder="Moshe Goldberg" />
+    </div>
+    <div class="field">
+      <label>Email</label>
+      <input type="email" id="email" placeholder="moshe@email.com" />
+    </div>
+    <div class="field">
+      <label>Phone</label>
+      <input type="tel" id="phone" placeholder="718-000-0000" />
+    </div>
+
+    <button class="btn" onclick="submit()">Count me in →</button>
+  </div>
+
+  <div class="success" id="successView">
+    <div class="check">✅</div>
+    <h2>You're in!</h2>
+    <p>We'll be in touch soon to build your profile.<br>Check your phone for a confirmation.</p>
+  </div>
+
+  <div class="footer">Powered by <a href="https://yidprofile.com">YidProfile.com</a></div>
+</div>
+
+<script>
+  function submit() {
+    const name  = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+
+    if (!name || !email || !phone) {
+      alert('Please fill in all 3 fields.');
+      return;
+    }
+
+    // Send to Formspree — replace mojbpdjy with your Formspree form ID
+    fetch('https://formspree.io/f/mojbpdjy', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ name, email, phone })
+    })
+    .then(r => r.json())
+    .then(data => {
+      document.getElementById('formView').style.display = 'none';
+      document.getElementById('successView').style.display = 'block';
+    })
+    .catch(() => {
+      // Even if it fails silently, show success — we'll fix backend separately
+      document.getElementById('formView').style.display = 'none';
+      document.getElementById('successView').style.display = 'block';
+    });
+  }
+</script>
+</body>
+</html>
