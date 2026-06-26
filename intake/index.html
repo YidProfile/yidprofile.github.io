@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Build Your YidProfile</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -12,7 +13,7 @@ body {
   font-family: 'DM Sans', Arial, sans-serif;
   min-height: 100vh;
   display: flex; align-items: center; justify-content: center;
-  padding: 20px;
+  padding: 24px;
 }
 .container {
   background: #0D1B2A;
@@ -174,7 +175,7 @@ input[type="checkbox"] {
     <div class="progress-bar" id="progressBar" style="width: 0%"></div>
   </div>
 
-  <form id="intakeForm">
+  <form id="intakeForm" action="https://formspree.io/f/xkoljaol" method="POST">
 
     <!-- SECTION 1: Resume -->
     <div class="section active" id="section-1">
@@ -301,10 +302,14 @@ let jobs = [];
 
 document.getElementById('intakeForm').addEventListener('submit', function(e) {
   e.preventDefault();
-  submitForm();
+  const jobsJson = document.createElement('input');
+  jobsJson.type = 'hidden';
+  jobsJson.name = 'jobsSubmitted';
+  jobsJson.value = JSON.stringify(jobs);
+  this.appendChild(jobsJson);
+  this.submit();
 });
 
-// Resume upload toggle
 document.querySelectorAll('input[name="hasResume"]').forEach(radio => {
   radio.addEventListener('change', function() {
     document.getElementById('resumeUpload').style.display = 
@@ -400,37 +405,6 @@ function renderJobs() {
     `;
     jobsList.appendChild(jobItem);
   });
-}
-
-function submitForm() {
-  const formData = new FormData(document.getElementById('intakeForm'));
-  
-  const data = {
-    fullName: formData.get('fullName'),
-    phone: formData.get('phone'),
-    email: formData.get('email'),
-    hasResume: formData.get('hasResume'),
-    resumeText: formData.get('resumeText'),
-    jobs: jobs,
-    skills: formData.get('skills'),
-    lookingFor: formData.get('lookingFor'),
-    other: formData.get('other'),
-    timestamp: new Date().toLocaleString()
-  };
-  
-  // Send to Formspree
-  fetch('https://formspree.io/f/xkoljaol', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  })
-  .then(response => {
-    if (response.ok) {
-      document.getElementById('intakeForm').style.display = 'none';
-      document.getElementById('section-success').classList.add('active');
-    }
-  })
-  .catch(error => console.error('Error:', error));
 }
 </script>
 </body>
